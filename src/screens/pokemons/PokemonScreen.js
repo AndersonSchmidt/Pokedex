@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Stylesheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 
 const PokemonScreen = props => {
   return (
@@ -9,6 +9,6 @@ const PokemonScreen = props => {
   );
 };
 
-const styles = Stylesheet.create({});
+const styles = StyleSheet.create({});
 
 export default PokemonScreen;
