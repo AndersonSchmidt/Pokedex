@@ -1,12 +1,23 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import Navigator from './src/navigation/Navigator';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
+import {Provider} from 'react-redux';
+import ReduxThunk from 'redux-thunk';
+import {enableScreens} from 'react-native-screens';
+import pokemonReducer from './src/store/reducers/pokemons';
 
-const App = () => {
+enableScreens();
+
+const rootReducer = combineReducers({
+  pokemons: pokemonReducer,
+});
+
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
+
+export default function App() {
   return (
-    <View>
-      <Text>It's working!</Text>
-    </View>
+    <Provider store={store}>
+      <Navigator />
+    </Provider>
   );
-};
-
-export default App;
+}
