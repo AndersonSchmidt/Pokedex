@@ -4,11 +4,15 @@ import {View, Text, StyleSheet} from 'react-native';
 const PokemonsScreen = props => {
   return (
     <View>
-      <Text>PokemonsScreen</Text>
+      <Text style={{fontFamily: 'SFProDisplay'}}>PokemonsScreen</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({});
+
+PokemonsScreen.navigationOptions = {
+  headerShown: false,
+};
 
 export default PokemonsScreen;
