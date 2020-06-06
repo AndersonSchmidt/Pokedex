@@ -1,10 +1,23 @@
-import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, Text, StyleSheet, FlatList, ScrollView} from 'react-native';
 import SearchBar from '../../components/SearchBar';
+import Pokemon from '../../components/pokemons/Pokemon';
+import {useDispatch, useSelector} from 'react-redux';
+import * as pokemonsActions from '../../store/actions/pokemons';
 
 const PokemonsScreen = props => {
+  const dispatch = useDispatch();
+  const pokemons = useSelector(state => state.pokemons.pokemons);
+
+  const fetchPokemons = async () => {
+    await dispatch(pokemonsActions.fetchPokemons());
+  };
+  useEffect(() => {
+    fetchPokemons();
+  }, []);
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Pokédex</Text>
@@ -16,7 +29,16 @@ const PokemonsScreen = props => {
         </View>
       </View>
       <SearchBar />
-    </View>
+      <FlatList
+        data={pokemons.results}
+        keyExtractor={pokemon => pokemon.url}
+        style={styles.list}
+        showsVerticalScrollIndicator={false}
+        renderItem={({item}) => {
+          return <Pokemon url={item.url} />;
+        }}
+      />
+    </ScrollView>
   );
 };
 
@@ -42,6 +64,9 @@ const styles = StyleSheet.create({
     fontFamily: 'SFProDisplay',
     fontSize: 16,
     color: '#747476',
+  },
+  list: {
+    marginTop: 45,
   },
 });
 
