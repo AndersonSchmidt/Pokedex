@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {View, Text, StyleSheet, FlatList, ScrollView} from 'react-native';
+import React, {useEffect, useState, useCallback} from 'react';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
 import SearchBar from '../../components/SearchBar';
 import Pokemon from '../../components/pokemons/Pokemon';
 import {useDispatch, useSelector} from 'react-redux';
@@ -8,16 +8,18 @@ import * as pokemonsActions from '../../store/actions/pokemons';
 const PokemonsScreen = props => {
   const dispatch = useDispatch();
   const pokemons = useSelector(state => state.pokemons.pokemons);
+  const [offset, setOffset] = useState(0);
 
-  const fetchPokemons = async () => {
-    await dispatch(pokemonsActions.fetchPokemons());
-  };
+  const fetchPokemons = useCallback(async () => {
+    await dispatch(pokemonsActions.fetchPokemons(offset));
+  }, [offset, dispatch]);
+
   useEffect(() => {
     fetchPokemons();
-  }, []);
+  }, [offset, fetchPokemons]);
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+    <View style={styles.container} showsVerticalScrollIndicator={false}>
       <View>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Pokédex</Text>
@@ -34,11 +36,14 @@ const PokemonsScreen = props => {
         keyExtractor={pokemon => pokemon.url}
         style={styles.list}
         showsVerticalScrollIndicator={false}
+        onEndReached={() => {
+          setOffset(offset + 20);
+        }}
         renderItem={({item}) => {
           return <Pokemon url={item.url} />;
         }}
       />
-    </ScrollView>
+    </View>
   );
 };
 
@@ -49,7 +54,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   titleContainer: {
-    marginTop: 100,
+    marginTop: 20,
   },
   title: {
     fontFamily: 'SFProDisplay',
@@ -66,7 +71,8 @@ const styles = StyleSheet.create({
     color: '#747476',
   },
   list: {
-    marginTop: 45,
+    paddingTop: 35,
+    marginTop: 10,
   },
 });
 
