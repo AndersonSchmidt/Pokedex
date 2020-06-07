@@ -25,6 +25,8 @@ const styles = StyleSheet.create({
   searchIcon: {
     marginVertical: 22,
     marginRight: 8,
+    width: 16,
+    height: 16,
   },
   input: {
     width: '75%',
