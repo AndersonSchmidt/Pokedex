@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import Colors from '../../constants/Colors';
+import Badge from './Badge';
 
 const Pokemon = props => {
   const [pokemon, setPokemon] = useState({});
@@ -35,6 +36,17 @@ const Pokemon = props => {
           <Text style={styles.name}>
             {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
           </Text>
+        </View>
+        <View style={styles.badgeContainer}>
+          {pokemon.types.map((type, index) => {
+            return (
+              <Badge
+                type={type.type.name}
+                key={type.type.name}
+                style={index === 0 ? styles.badge : null}
+              />
+            );
+          })}
         </View>
       </View>
       <View style={styles.imageContainer}>
@@ -72,13 +84,20 @@ const styles = StyleSheet.create({
   },
   nameContainer: {
     marginLeft: 20,
-    marginBottom: 50,
+    marginBottom: 5,
   },
   name: {
     fontFamily: 'SFProDisplay',
     fontSize: 26,
     fontWeight: 'bold',
     color: 'white',
+  },
+  badgeContainer: {
+    marginLeft: 20,
+    flexDirection: 'row',
+  },
+  badge: {
+    marginRight: 5,
   },
   imageContainer: {
     marginRight: 10,

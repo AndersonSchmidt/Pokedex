@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import Colors from '../../constants/Colors';
 import {ScrollView} from 'react-native-gesture-handler';
+import Badge from '../../components/pokemons/Badge';
 
 const PokemonScreen = props => {
   const pokemon = props.navigation.getParam('pokemon');
@@ -37,6 +38,17 @@ const PokemonScreen = props => {
           </View>
           <View style={styles.nameContainer}>
             <Text style={styles.name}>{name}</Text>
+          </View>
+          <View style={styles.badgeContainer}>
+            {pokemon.types.map(type => {
+              return (
+                <Badge
+                  type={type.type.name}
+                  key={type.type.name}
+                  style={styles.badge}
+                />
+              );
+            })}
           </View>
         </View>
       </View>
@@ -129,6 +141,12 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 'bold',
     color: 'white',
+  },
+  badgeContainer: {
+    flexDirection: 'row',
+  },
+  badge: {
+    marginRight: 5,
   },
   bottomHeaderContainer: {
     marginLeft: 36,
