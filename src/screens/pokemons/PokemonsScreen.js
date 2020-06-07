@@ -40,7 +40,7 @@ const PokemonsScreen = props => {
           setOffset(offset + 20);
         }}
         renderItem={({item}) => {
-          return <Pokemon url={item.url} />;
+          return <Pokemon url={item.url} navigation={props.navigation} />;
         }}
       />
     </View>

@@ -15,6 +15,9 @@ const Pokemon = props => {
 
   return Object.keys(pokemon).length ? (
     <TouchableOpacity
+      onPress={() => {
+        props.navigation.navigate('Pokemon', {pokemon});
+      }}
       style={[
         styles.container,
         {
