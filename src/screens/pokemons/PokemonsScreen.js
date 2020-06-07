@@ -30,7 +30,7 @@ const PokemonsScreen = props => {
           </Text>
         </View>
       </View>
-      <SearchBar />
+      <SearchBar navigation={props.navigation} />
       <FlatList
         data={pokemons.results}
         keyExtractor={pokemon => pokemon.url}

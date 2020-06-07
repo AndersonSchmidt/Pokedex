@@ -1,15 +1,48 @@
-import React from 'react';
-import {View, StyleSheet, Image} from 'react-native';
+import React, {useState} from 'react';
+import {View, StyleSheet, Image, Alert, ActivityIndicator} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 
 const SearchBar = props => {
+  const [search, setSearch] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const url = 'https://pokeapi.co/api/v2/pokemon/';
+
+  const fetchPokemon = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(url + search.toLowerCase());
+      if (response.ok) {
+        const pokemon = await response.json();
+        props.navigation.navigate('Pokemon', {pokemon});
+      } else {
+        Alert.alert('Pokemon not found', 'Check your spelling', [{text: 'Ok'}]);
+      }
+    } catch (err) {
+      Alert.alert('Something went wrong', 'Try again later', [{text: 'Ok'}]);
+    }
+    setIsLoading(false);
+  };
+
   return (
     <View style={styles.container}>
       <Image
         source={require('../../assets/icons/search.png')}
         style={styles.searchIcon}
       />
-      <TextInput placeholder="Search any Pokémon" style={styles.input} />
+      <TextInput
+        placeholder="Search any Pokémon"
+        style={styles.input}
+        value={search}
+        onChangeText={text => {
+          setSearch(text);
+        }}
+        onEndEditing={() => {
+          fetchPokemon();
+        }}
+      />
+      <View style={styles.spinnerContainer}>
+        {isLoading && <ActivityIndicator size="small" color="#d04164" />}
+      </View>
     </View>
   );
 };
@@ -29,9 +62,13 @@ const styles = StyleSheet.create({
     height: 16,
   },
   input: {
-    width: '75%',
+    width: '70%',
     fontFamily: 'SFProDisplay',
     fontSize: 16,
+  },
+  spinnerContainer: {
+    width: 20,
+    justifyContent: 'center',
   },
 });
 
