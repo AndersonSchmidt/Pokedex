@@ -8,7 +8,9 @@ const Pokemon = props => {
 
   const fetchPokemon = async url => {
     const response = await fetch(url);
-    setPokemon(await response.json());
+    if (response.ok) {
+      setPokemon(await response.json());
+    }
   };
   useEffect(() => {
     fetchPokemon(props.url);
