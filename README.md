@@ -5,6 +5,6 @@ You can test the app on your device by downloading the <a href="https://drive.go
 
 Note: Since I don't have macOS, it only works on Android so far.
 
-<img src="https://i.imgur.com/U5kpABj.jpg" width="280px"></img>
-<img src="https://i.imgur.com/FihJBFm.jpg" width="280px"></img>
-<img src="https://i.imgur.com/SIZUsRG.jpg" width="280px"></img>
+<img src="https://i.imgur.com/U5kpABj.jpg" width="250px"></img>
+<img src="https://i.imgur.com/FihJBFm.jpg" width="250px"></img>
+<img src="https://i.imgur.com/SIZUsRG.jpg" width="250px"></img>
